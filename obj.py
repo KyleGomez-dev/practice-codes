@@ -1,4 +1,4 @@
-
+#Creating a object and putting them into a list.
 class person:
     def __init__(self,name,age,gender):
         self.name = name
@@ -23,4 +23,5 @@ for arrs in arr:
     if arrs == p2:
         print('gab is detected, stopping the loop.')
         break
+
 print(type(arrs))
