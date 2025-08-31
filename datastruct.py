@@ -1,3 +1,5 @@
+#Creating a object and putting them into a list.
+
 class pearson:
     def __init__(self, name, age, gender):
         self.name = name
@@ -9,4 +11,5 @@ class pearson:
     
 
 person1 = pearson("Alice",16,'female')
+
 person1.display_info()
