@@ -50,25 +50,25 @@ class Station:
         return print("station not found!")
         
     def distance(self, elem1, elem2):
-            # Find positions of both elements
-            index1, index2 = -1, -1
-            index = 0
-            current = self.head
+        # Find positions of both elements
+        index1, index2 = -1, -1
+        index = 0
+        current = self.head
     
-            while current:
-                if current.station == elem1:
-                    index1 = index
-                if current.station == elem2:
-                    index2 = index
-                current = current.next
-                index += 1
+        while current:
+            if current.station == elem1:
+                index1 = index
+            if current.station == elem2:
+                index2 = index
+            current = current.next
+            index += 1
     
-            # If one of them not found
-            if index1 == -1 or index2 == -1:
-                raise ValueError("One or both elements not found in the list")
+        # If one of them not found
+        if index1 == -1 or index2 == -1:
+            raise ValueError("One or both elements not found in the list")
     
-            # Return absolute distance
-            return abs(index1 - index2)
+        # Return absolute distance
+        return abs(index1 - index2)
     
     def length(self):
         return self.size
@@ -187,3 +187,4 @@ while True:
         
         
         
+
