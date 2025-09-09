@@ -75,11 +75,12 @@ class Station:
     
     def insert(self, data, position):
         new_node = Node(data)
-
+        self.size += 1
         # Case 1: Insert at the head (position 0)
         if position == 1:
             new_node.next = self.head
             self.head = new_node
+            
             return
 
         # Traverse to the node before the target position
@@ -108,6 +109,7 @@ class Station:
 
 # Example usage
 s = Station()
+
 print("Help             -   Show this menu")
 print("printAllstations -   Show all stations")
 print("addnewstation    -   add a new station")
@@ -117,8 +119,9 @@ print("stop             -   stop current run")
 print("exit             -   exit the program completely")
 print()
 print()
-lenUpd = s.length()
+
 while True: 
+    lenUpd = s.length()
     userInput = input("choose action: ")
     if userInput.lower() == "help":
         print("Help             -   Show this menu")
@@ -133,7 +136,7 @@ while True:
     elif userInput.lower() == "printallstations":
         s.display()
     elif userInput.lower() == "addnewstation":
-        if lenUpd == 3:
+        if lenUpd >= 3:
             add = input("Enter Station: ")
             if add.lower() == "stop":
                 print("stop detected, stopping the function")
