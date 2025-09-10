@@ -150,7 +150,7 @@ def Start():
                     continue
                 else:
                     s.display()
-                    location = input("Enter the position you want to insert the new station: ")
+                    location = int(input("Enter the position you want to insert the new station: "))
                     if location.lower == "stop":
                         print("stop detected, stopping the current function")
                         continue
@@ -200,3 +200,4 @@ def Start():
 
 if __name__ == "__main__":
     Start()
+
