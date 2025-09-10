@@ -124,14 +124,7 @@ class Station:
 def Start():
     s = Station()
     
-    print("""Available Commands:
-          Help             -   Show this menu
-          printAllstations -   Show all stations
-          addnewstation    -   add a new station
-          deletestation    -   delete a station
-          getdistance      -   measure the distance between two stations
-          stop             -   stop current run
-          exit             -   exit the program completely""")
+    s.help()
     print()
     print()
     
@@ -210,5 +203,6 @@ def Start():
 
 if __name__ == "__main__":
     Start()
+
 
 
