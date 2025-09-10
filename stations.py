@@ -7,13 +7,14 @@ class Node:
 class Station:
     def __init__(self):
         self.head = None
-        self.size = 1
+        self.size = 0
 
 # ADD STATION
     def addStation(self, station): 
         new_node = Node(station)
         if self.head is None:  # If list is empty
             self.head = new_node
+            self.size += 1
             return
         current = self.head
         while current.next:  # loops until last node
@@ -37,6 +38,7 @@ class Station:
         if current and current.station == target:
             self.head = current.next  # move head
             current = None
+            self.size -= 1
             return True
 
         # Case 2: target is in middle or end
@@ -45,10 +47,11 @@ class Station:
             if current.station == target:
                 prev.next = current.next
                 current = None
+                self.size -= 1
                 return True
             prev = current
             current = current.next
-
+            
         # Case 3: not found
         return False
 #TO SEARCH A STATION
@@ -65,7 +68,6 @@ class Station:
         index1, index2 = -1, -1
         index = 0
         current = self.head
-    
         while current:
             if current.station == elem1:
                 index1 = index
@@ -73,10 +75,10 @@ class Station:
                 index2 = index
             current = current.next
             index += 1
-    
+        
         # If one of them not found
         if index1 == -1 or index2 == -1:
-            raise ValueError("One or both elements not found in the list")
+            raise ValueError("One or both elements not found in the list.")
         # Return absolute distance
         return abs(index1 - index2)
 #GETTING THE LENGTH OF LIST
@@ -86,27 +88,30 @@ class Station:
 # ADDDING ELEMENT TO A SPECIFIC LOCATION
     def insert(self, data, position):
         new_node = Node(data)
-        self.size += 1
-        
         if position == 1:
             new_node.next = self.head
             self.head = new_node
+            self.size += 1
             return
-        
         current = self.head
         index = 1
-        while current and index < position:
+        while current and index < position - 1:
             current = current.next
             index += 1
-
-        if not current:  #if position out of range
+        if not current:
             raise IndexError("Position out of range")
+        new_node.next = current.next
+        current.next = new_node
+        self.size += 1
 
         # Insert new node
         new_node.next = current.next
         current.next = new_node
 #PRINT ALL STATIONS
     def display(self):
+        if self.head is None:
+            print("No stations available.")
+            return
         current = self.head
         i = 1
         while current:
@@ -131,7 +136,6 @@ def Start():
     print()
     
     while True: 
-        lenUpd = s.length()
         userInput = input("choose action: ")
 #HELP
         if userInput.lower() == "help":
@@ -143,30 +147,34 @@ def Start():
             s.display()
 #ADD NEW STATION
         elif userInput.lower() == "addnewstation":
-            if lenUpd >= 3:
-                add = input("Enter Station: ").title()
-                if add == "Stop":
-                    print("stop detected, stopping the current function")
+            add = input("Enter Station: ").title()
+            if add.lower() == "stop":
+                print("Stop detected, stopping the function")
+                continue
+
+            if s.length() >= 3:
+                print("\nInsert at:")
+                s.display()
+                location = input("Enter the position: ")
+
+                if location.lower() == "stop":
+                    print("Stop detected, stopping the function")
                     continue
-                else:
-                    s.display()
-                    location = int(input("Enter the position you want to insert the new station: "))
-                    if location.lower == "stop":
-                        print("stop detected, stopping the current function")
-                        continue
-                    else:
-                        s.insert(add,location)
-                        print(add,"is Added")
+
+                try:
+                    location = int(location)
+                    s.insert(add, location)
+                    print(add, "is added.")
+                except ValueError:
+                    print("Invalid input. Station not added.")
+                except IndexError as e:
+                    print(e)
             else:
-                add = input("Enter Station: ").title()
-                if add == "Stop":
-                    print("stop detected, stopping the current function")
-                    continue
-                elif add != "":
+                if add != "":
                     s.addStation(add)
-                    print(add.title(), "Successfully added.")
+                    print(f"{add} successfully added.")
                 else:
-                    print("invalid station")
+                    print("Invalid station")
 #DELETE STATION
         elif userInput.lower() == "deletestation":
             toDelete = input("enter the station: ").title()
@@ -177,27 +185,30 @@ def Start():
                 if toDelete == s.search(toDelete):
                     print(s.search(toDelete),"is successfully deleted.")
                     s.deleteStation(toDelete)
-                    lenUpd -= 1
 #DET DISTANCE
         elif userInput.lower() == "getdistance":
             station1 = input("enter the first station: ").title()
             if station1 == "Stop":
                 print("stop detected, stopping the current function")
                 continue
-            else:
-                station2 = input("enter the second station: ").title()
-                if station2 == "Stop":
-                    print("stop detected, stopping current the function")
-                    continue
-                else:
-                    print(f"The distace between {station1}and {station2} is :{s.distance(station1, station2)} station(s)")
+            station2 = input("enter the second station: ").title()
+            if station2 == "Stop":
+                print("stop detected, stopping current the function")
+                continue
+            try:
+                print(f"The distace between {station1} and {station2} is :{s.distance(station1, station2)} station(s)")
+            except ValueError as e:
+                print(e)
             
 #EXIT
         elif userInput.lower() == "exit":
-            print("exit-> terminating the program.")
+            print("Exiting program completely...")
             break
+        else:
+            print("Unknown command. please type `help` for options.")
 
 
 if __name__ == "__main__":
     Start()
+
 
